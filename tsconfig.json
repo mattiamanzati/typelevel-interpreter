@@ -3,6 +3,7 @@
         "strict": true
     },
     "files": [
-        "./src/index.ts"
+        "./src/index.ts",
+        "./tests/index.ts"
     ]
 }

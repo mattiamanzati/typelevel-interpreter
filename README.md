@@ -39,3 +39,18 @@ Yeah, this was a saturday project! So don't even think about production environm
 
 I love typelevel programming in TypeScript, so I thought... can I bring it to next level?
 Turned out that building a programming language and it's intepreter using only type definitions in TypeScript! :D
+
+## Supported Nodes
+
+[X] ReturnStatement
+[X] TrueKeyword
+[X] FalseKeyword
+[X] StringLiteral
+[X] Not
+[X] Equals
+[X] And
+[X] Expression
+[X] Block
+[X] Identifier
+[X] VariableDeclaration
+[X] ConditionalExpression

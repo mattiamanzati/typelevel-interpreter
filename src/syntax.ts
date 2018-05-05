@@ -46,3 +46,20 @@ export interface If<Condition extends INode, TrueCase extends INode, FalseCase e
     then: TrueCase,
     else: FalseCase
 }
+
+export interface Not<Expression extends INode>{
+    kind: 'Not',
+    expression: Expression
+}
+
+export interface Eq<Left extends INode, Right extends INode> {
+    kind: 'Equals',
+    left: Left,
+    right: Right
+}
+
+export interface And<Left extends INode, Right extends INode> {
+    kind: 'And',
+    left: Left,
+    right: Right
+}

@@ -209,16 +209,79 @@ interface ConditionalExpressionRunner<
   P: GetPointer<FX>;
 }
 
+type NotNode = {
+  kind: 'Not',
+  expression: INode
+}
+interface NotRunner<
+  X extends ExecutionState,
+  N extends INode,
+  CX extends ExecutionState = IRunner<X, _<N, "expression">>,
+  CV = GetValue<CX, GetPointer<CX>>,
+  FX extends ExecutionState = SetPointer<CX, CV extends FalsyValue ? Value<true> : Value<false>>
+> {
+  C: GetScope<FX>;
+  R: GetReturn<FX>;
+  S: GetSignal<FX>;
+  P: GetPointer<FX>;
+}
+
+type EqualsNode = {
+  kind: 'Equals',
+  left: INode,
+  right: INode
+}
+interface EqualsRunner<
+  X extends ExecutionState,
+  N extends INode,
+  LX extends ExecutionState = IRunner<X, _<N, "left">>,
+  LV = GetValue<LX, GetPointer<LX>>,
+  RX extends ExecutionState = IRunner<LX, _<N, "right">>,
+  RV = GetValue<RX, GetPointer<RX>>,
+  P extends Pointer = LV extends RV ? (RV extends LV ? Value<true> : Value<false>) : Value<false>,
+  FX extends ExecutionState = SetPointer<RX, P>
+> {
+  C: GetScope<FX>;
+  R: GetReturn<FX>;
+  S: GetSignal<FX>;
+  P: GetPointer<FX>;
+}
+
+type AndNode = {
+  kind: 'And',
+  left: INode,
+  right: INode
+}
+interface AndRunner<
+  X extends ExecutionState,
+  N extends INode,
+  LX extends ExecutionState = IRunner<X, _<N, "left">>,
+  LV = GetValue<LX, GetPointer<LX>>,
+  RX extends ExecutionState = IRunner<LX, _<N, "right">>,
+  RV = GetValue<RX, GetPointer<RX>>,
+  P extends Pointer = LV extends FalsyValue ? Value<false> : (RV extends FalsyValue ? Value<false> : Value<true>),
+  FX extends ExecutionState = SetPointer<RX, P>
+> {
+  C: GetScope<FX>;
+  R: GetReturn<FX>;
+  S: GetSignal<FX>;
+  P: GetPointer<FX>;
+}
+
+
 export type INode =
   | StringLiteralNode
   | ExpressionNode
+   | NotNode
   | BlockNode
   | IdentifierNode
   | VariableDeclarationNode
   | ConditionalExpressionNode
   | TrueKeywordNode
   | FalseKeywordNode
-  | ReturnStatementNode;
+  | ReturnStatementNode
+  | EqualsNode
+  | AndNode;
 type IRunner<
   X extends ExecutionState = GlobalState,
   N extends INode = never
@@ -234,7 +297,10 @@ type IRunner<
     Identifier: IdentifierRunner<X, N>;
     VariableDeclaration: VariableDeclarationRunner<X, N>;
     ConditionalExpression: ConditionalExpressionRunner<X, N>;
-    ReturnStatement: ReturnStatementRunner<X, N>
+    ReturnStatement: ReturnStatementRunner<X, N>,
+    Not: NotRunner<X, N>,
+    Equals: EqualsRunner<X, N>,
+    And: AndRunner<X, N>
   })[N["kind"]];
 })[GetSignal<X>["$signal"]];
 
