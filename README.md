@@ -42,15 +42,15 @@ Turned out that building a programming language and it's intepreter using only t
 
 ## Supported Nodes
 
-[X] ReturnStatement
-[X] TrueKeyword
-[X] FalseKeyword
-[X] StringLiteral
-[X] Not
-[X] Equals
-[X] And
-[X] Expression
-[X] Block
-[X] Identifier
-[X] VariableDeclaration
-[X] ConditionalExpression
+- [X] ReturnStatement
+- [X] TrueKeyword
+- [X] FalseKeyword
+- [X] StringLiteral
+- [X] Not
+- [X] Equals
+- [X] And
+- [X] Expression
+- [X] Block
+- [X] Identifier
+- [X] VariableDeclaration
+- [X] ConditionalExpression
