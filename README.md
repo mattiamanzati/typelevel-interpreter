@@ -1,6 +1,37 @@
 # typelevel-interpreter
 Language and working Interpreter using only TypeScript types (no JavaScript either written or emitted)
 
+```typescript
+type Program<Bool extends True | False> = __<
+  Set<$<"returnValue">, String<"">>,
+  __<
+    Set<$<"test">, Bool>,
+    __<
+      If<
+        $<"test">,
+        Set<$<"returnValue">, String<"It's true!">>,
+        Set<$<"returnValue">, String<"unfortunately false :(">>
+      >,
+      Return<$<"returnValue">>
+    >
+  >
+>;
+
+const test1: RunProgram<Program<False>> = {
+    result: "unfortunately false :(",
+    error: {
+        $signal: "return"
+    }
+};
+
+const test2: RunProgram<Program<True>> = {
+    result: "It's true!",
+    error: {
+        $signal: "return"
+    }
+};
+```
+
 ## Wait... WAT?
 ![wat](http://i0.kym-cdn.com/photos/images/newsfeed/000/173/576/Wat8.jpg?1315930535)
 
